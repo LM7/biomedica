@@ -3,6 +3,8 @@ informatica_biomedica
 
 Progetto di informatica biomedica:
 
+Click [here](Portale/view/HomePage.php) to see the project
+
 -Portale web/service per la gestione del dato clinico di pazienti affetti da Sindrome di Joubert
 
 -Divisione delle componenti del progetto:
@@ -12,3 +14,5 @@ Progetto di informatica biomedica:
   
   
 Realizzato da L.Tomaselli, L.Martucci, C.Raponi.
+
+
