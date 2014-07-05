@@ -3,7 +3,7 @@ Biomedica
 
 Progetto di informatica biomedica:
 
-Click [here](Portale/view/HomePage.php) to see the project
+Click [here](https://github.com/luca-tom/biomedica/Portale/view/HomePage.php) to see the project
 
 -Portale web/service per la gestione del dato clinico di pazienti affetti da Sindrome di Joubert
 
