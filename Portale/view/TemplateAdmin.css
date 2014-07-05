@@ -1,0 +1,42 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: auto; 
+	background-color: #FFFFFF;
+	background-image: url(template.jpg);
+}
+
+#body h3 {
+   color:#228B22;
+}
+
+#chooseText {
+	color:#228B22;
+	font-size: large;
+}
+
+#imglogo {
+	float: left;
+}
+
+.popover-example .popover {
+  position: relative;
+  display: block;
+  margin: 20px;
+}
+
+#formLogin {
+	float: right;
+}
+
+#imglogoRM3 {
+	width: 10%;
+	height: 10%;
+	float:right;
+}
+
+#add {
+	float:right;
+}

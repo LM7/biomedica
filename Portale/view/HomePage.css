@@ -1,0 +1,34 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: auto; 
+	background-color: #FFFFFF;
+	background-image: url(template.jpg); 
+	
+
+}
+
+#imglogo {
+	float: left;
+	
+}
+
+#formLogin {
+	float: right;
+}
+
+#imglogoRM3 {
+	width: 10%;
+	height: 10%;
+	float:right;
+}
+
+#add {
+	float:right;
+}
+
+
+
+

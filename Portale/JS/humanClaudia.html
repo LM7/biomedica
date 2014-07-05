@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>Human</title> 
+  <style>
+    body{
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #stats {  /* Align stats top-left */
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  </style> 
+  </head>
+  <body>
+  <!-- JavaScript libraries -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+  <script src="assets/libs/TrackballControls.js"></script>
+  <script src="assets/libs/OBJLoader.js"></script>
+  <!-- Javascript code that runs our Three.js examples --> 
+  <script>
+    // once everything is loaded, we run our Three.js stuff.
+    $(function () {
+
+      var stats = initStats();
+
+      // create a scene, that will hold all our elements such as objects, cameras and lights.
+      var scene = new THREE.Scene();
+
+      // create a camera, which defines where we're looking at.
+      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+      // create trackball controls
+      var trackballControls = new THREE.TrackballControls(camera);
+
+      // create a render and set the size
+      var webGLRenderer = new THREE.WebGLRenderer();
+      webGLRenderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
+      webGLRenderer.setSize(window.innerWidth, window.innerHeight);
+
+      // position and point the camera to the center of the scene
+      camera.position.set(-30,40,50);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+      // add spotlights
+      var spotLight1 = new THREE.SpotLight(0xffffff);
+      spotLight1.position.set(-30, 40, 500);
+      spotLight1.intensity = 1;
+      scene.add(spotLight1);
+
+      var spotLight2 = new THREE.SpotLight(0xffffff);
+      spotLight2.position.set(30, -40, -500);
+      spotLight2.intensity = 1;
+      scene.add(spotLight2);
+
+      // add the output of the renderer to the html element
+      $('body').append(webGLRenderer.domElement);
+
+      // call the render function
+      var step = 0;
+
+      // setup the control gui
+      var controls = new function () {};
+
+      var gui = new dat.GUI();
+      var objHuman = new THREE.Object3D();
+
+      var Sound = function ( sources) {
+        var audio = document.createElement( 'audio' );
+        for ( var i = 0; i < sources.length; i ++ ) {
+            var source = document.createElement( 'source' );
+            source.src = sources[ i ];
+            audio.appendChild( source );
+        }
+        this.play = function () {
+            audio.play();
+            audio.volume = 1
+        }
+        this.pause = function() {
+            audio.pause();
+        }
+        this.stop = function() {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+      }
+
+      function load(path, colorNum, callback) {
+
+        var loader = new THREE.OBJLoader();
+        loader.load(path, function (obj) {
+
+          global_o = obj;
+          var multiMaterial = [
+            new THREE.MeshPhongMaterial({color: colorNum, side: THREE.DoubleSide, shading: THREE.FlatShading}),
+            new THREE.MeshBasicMaterial({wireframe: false, overdraw: true, color: 0xffffff, side: THREE.DoubleSide})
+            ];
+
+          var objPart = THREE.SceneUtils.createMultiMaterialObject(obj.children[0].geometry, multiMaterial);
+            
+          callback(objPart);
+        });
+
+      }
+
+      function loadAndTexture(path, texture, callback) {
+        
+        var loader = new THREE.OBJLoader();
+        loader.load(path, function (obj) {
+
+          var texture = THREE.ImageUtils.loadTexture(texture);
+          var mat = new THREE.MeshPhongMaterial();
+          mat.map = texture;
+          obj.children[0].material = mat;
+          callback( obj );
+        });
+      }
+
+      var human = new THREE.Object3D();
+      load('assets/models/human.obj', "#FF6347", function (obj) {
+        human.add(obj);
+        obj.scale.set(.1,.1,.1);
+      });
+      objHuman.add(human);
+
+      var cns = new THREE.Object3D();
+      load('assets/models/brain_left.obj', "#967B70", function (obj) {
+        cns.add(obj);
+        obj.scale.set(.1,.1,.1);
+      });
+      load('assets/models/brain_right.obj', "#967B70", function (obj) {
+        cns.add(obj);
+        obj.scale.set(.1,.1,.1);
+      });
+      load('assets/models/spine.obj', "#FFFFFF", function (obj) {
+        cns.add(obj);
+        obj.scale.set(2,2,2);
+        obj.position.set(10,10,0);
+      });
+      cns.position.y = 50;
+      objHuman.add(cns);
+
+      var eyes = new THREE.Object3D();
+      loadAndTexture('assets/models/eye.obj','assets/models/eye-texture.jpg', function (obj) {
+        eyes.add(obj);
+        obj.scale.set(.1,.1,.1);
+        obj.position.set(50,50,0);
+      });
+
+      loadAndTexture('assets/models/eye.obj','assets/models/eye-texture.jpg', function (obj) {
+        eyes.add(obj);
+        obj.scale.set(.1,.1,.1);
+        obj.position.set(100,50,0);
+      });
+      objHuman.add(eyes);
+
+      var kidneys = new THREE.Object3D();
+      load('assets/models/Kidney_left.obj', "#AA331D", function (obj) {
+        kidneys.add(obj);
+        obj.position.set(50,80,-1000);
+      });
+      load('assets/models/Kidney_right.obj', "#AA331D", function (obj) {
+        kidneys.add(obj);
+        obj.position.set(50,80,-1000);
+      });
+      objHuman.add(kidneys);
+
+      var liver = new THREE.Object3D();
+      load('assets/models/liver1.obj', "#86202B", function (obj) {
+        liver.add(obj);
+        obj.position.set(0,80,-1200);
+      });
+      load('assets/models/liver2.obj', "#86202B", function (obj) {
+        liver.add(obj);
+        obj.position.set(0,80,-1200);
+      });
+      objHuman.add(liver);
+
+      var polydactyly = new THREE.Object3D();
+      load('assets/models/hand.obj', "#FF6347", function (obj) {
+        polydactyly.add(obj);
+      });
+      load('assets/models/finger.obj', "#FF6347", function (obj) {
+        polydactyly.add(obj);
+        obj.scale.set(.05,.06,.05);       
+        obj.rotation.x = -Math.PI/2;
+        obj.rotation.y = -Math.PI/2;
+        obj.rotation.z = -Math.PI/10;
+        obj.position.set(.13,.04,.27);
+      });
+      polydactyly.scale.set(50,50,50);
+      polydactyly.position.set(50,20,0);
+      objHuman.add(polydactyly);
+
+      var tongue = new THREE.Object3D();
+      load('assets/models/tongue.obj', "#FF6347", function (obj) {
+        tongue.add(obj);
+      });
+      tongue.scale.set(10,10,10);
+      tongue.position.set(-50,-50,0);
+      objHuman.add(tongue);
+
+      var heart = new THREE.Object3D();
+      load('assets/models/heart.obj', "#FF0000", function (obj) {
+        heart.add(obj);
+      });
+      heart.position.x = -80;
+      objHuman.add(heart);
+
+      var mti = new THREE.Object3D();
+      load('assets/models/mti.obj', "#FFFFFF", function (obj) {
+        mti.add(obj);
+      });
+      mti.position.set(-20,-50,-50);
+      mti.scale.set(10,10,10);
+      objHuman.add(mti);
+/*
+      
+
+      
+
+      load('assets/models/human.obj', function (obj) {
+        objHuman.add(obj);
+      });*/
+
+      scene.add(objHuman);
+
+      var axisHelper = new THREE.AxisHelper(10);
+      scene.add(axisHelper);
+
+
+      //var audio = new Sound(['assets/sound/Siamo_fatti_cosi.mp3']);
+      //scene.add(audio);
+      
+      var controls = new function () {
+          this.music = false;
+      };
+      
+      var audio = new Sound( [ 'assets/sound/Siamo_fatti_cosi.mp3' ]);
+      
+      gui.add(controls, 'music').onChange(function (value) {
+          if(value)
+            audio.play();
+          else
+            audio.pause();
+      });
+
+      render();
+
+      function render() {
+        stats.update();
+        trackballControls.update();
+
+        // render using requestAnimationFrame
+        requestAnimationFrame(render);
+        webGLRenderer.render(scene, camera);
+      }
+
+      function initStats() {
+        var stats = new Stats();
+        stats.setMode(0); // 0: fps, 1: ms
+        $('body').append(stats.domElement);
+        return stats;
+      }
+    });
+  </script>  
+ </body>
+</html>
