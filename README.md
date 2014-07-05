@@ -1,4 +1,4 @@
-informatica_biomedica
+Biomedica
 =====================
 
 Progetto di informatica biomedica:
