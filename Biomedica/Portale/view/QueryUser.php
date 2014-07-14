@@ -201,14 +201,6 @@ error_reporting(0);
             	}
             }
 			</script>
-
-		
-
-		<ul class="pager" style="margin-top: 4.5cm; margin-left: -30.5cm" onclick="location.href='Homepage.php'">
-			<li class="prev">
-				<a href="#"> &#8592 Homepage</a>
-			</li>
-		</ul>
 		
 	</body>
 </html>
