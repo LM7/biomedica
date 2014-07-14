@@ -1,3 +1,6 @@
+<?php
+error_reporting(0);  
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,36 +27,45 @@
 
 	</head>
 	<body id="body">
-		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 8.6cm; margin-top: 0cm" alt="immagine non visualizzata" width="130" height="150"/>
 		
-		<h3><br>Studio e analisi<br>della Sindrome di Joubert</h3>	
-	
-		<div class="panel panel-info"style="width:5cm;height:3cm;  margin-top:-2cm;  margin-left: 30cm">
-  			<div class="panel-heading">
-    		<h3 class="panel-title"> </h3>
+		<div class="panel panel-info"style="float:right; float:top; margin-top:1cm; margin-right:1cm; width:5cm;height:3cm;">
+			<div class="panel-heading">
+				<h3 class="panel-title"></h3>
 			</div>
-  			<div class="panel-body">
-    		<span class="glyphicon glyphicon-user"></span>
-    			<?php
-    			session_start();
-				if (isset($_SESSION["myusername"])) {
-					print "Benvenuto <strong> ".$_SESSION["myusername"];
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-user"></span>
+				<?php
+				session_start();
+				if (isset($_SESSION["myusername"]))
+					print "Benvenuto <strong> " . $_SESSION["myusername"];
+				else {
+					echo "<meta http-equiv=refresh content='0; url=Unauthorized.php'>";
+					exit;
 				}
-				else if (isset($_COOKIE["myusername"])) {
-					print "Benvenuto <strong> ".$_COOKIE["myusername"];
-				}
-					
-				else
-					print "Sessione scaduta";			
-    			?>
-    			</strong><br><br>
-    		<button type="button" class="btn btn-primary btn-sm"style="margin-left: 3cm" onclick="location.href='../persistence/Logout.php'">Esci</button>
-  			</div>
+				?>
+				</strong>
+				<br>
+				<br>
+				<button type="button" class="btn btn-primary btn-sm"style="margin-left: 3cm" onclick="location.href='../persistence/Logout.php'">
+					Esci
+				</button>
+			</div>
 		</div>
 		
 		
 		
-		<p id="chooseText" style="margin-left: 8cm; margin-top: 2cm"><strong>Scegli una tra le seguenti l'attivit&agrave:</strong></p>
+		
+		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 10.77cm; margin-top: 1.5cm" alt="immagine non visualizzata" width="130" height="150"/>
+
+		<h3 style="margin-top: 1.5cm">
+		<br>
+		Studio e analisi
+		<br>
+		della Sindrome di Joubert</h3>	
+		
+		
+		
+		<p id="chooseText" style="margin-left: 8cm; margin-top:3cm"><strong>Scegli una tra le seguenti l'attivit&agrave:</strong></p>
 		
 		<p class="text-center">
 		<button type="button"  class="btn btn-success" onclick="location.href='InsertSample.php'" value="go" 
@@ -84,10 +96,6 @@
   		<p align="center">Permette di interrogare l'archivio per effettuare ricerche incrociate sui pazienti affetti dalla sindrome.</p> 
 		</div>
 		</p>
-		
-		<ul class="pager" style="margin-top: 1.2cm; margin-left: -30.5cm" onclick="location.href='HomePage.php'">
-  		<li class="prev"><a href="#"> &#8592 Homepage</a></li>
-		</ul>
 		
 </body>
 </html>

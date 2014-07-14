@@ -17,7 +17,7 @@ class LoadRecord {
 		$log = new Log();
 		if(count($record)<39) {
 			$log->emptyAll();
-			$log->write('Il file Excel non rispetta lo standard'. "<br /> <br />");	
+			//$log->write('Il file Excel non rispetta lo standard'. "<br /> <br />");	
 			throw new Exception("Il file Excel non rispetta lo standard");			
 		}
 		$lr = new LoadRecord();
@@ -39,9 +39,10 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 			
 			//riempie tabella patient
 			
-			//ATTENZIONE OVVIAMENTE NON VA BENE COSI', HO RISOLTO IL PROBLEMA TOGLIENDO LE NOTE
-			if($NG == 1936)
-				$Notes = "";
+			$Notes = str_replace("'"," ",$Notes);
+            $Notes = str_replace('"'," ",$Notes);
+            $Diagnosis = str_replace("'"," ",$Diagnosis);
+            $Diagnosis = str_replace('"'," ",$Diagnosis);
 			
 			$query= sprintf("INSERT INTO patient (ng, insertion_date, family, sex, consang, cns, eyes, kidneys, liver, polydactyly, 
 			tongue, heart, dysmorphic, mti, notes, diagnosis) VALUES 
@@ -53,7 +54,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				$success++;
 			}
 			else {
-				$log->write( "fallimentoPatient riga: ".$row . "<br />");
+				$log->write( " fallimentoPatient riga: ".$row . "<br />");
 			}
 			
 			if($success > 0) {
@@ -64,7 +65,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoCNS riga: ".$row . "<br />");	
+					$log->write( " fallimentoCNS riga: ".$row . "<br />");	
 					
 					
 				$query= sprintf("INSERT INTO eyes(ng_eyes, insertion_date_eyes, leber_amaurosis, retinopathy, coloboma) VALUES 
@@ -74,7 +75,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoEYES riga: ".$row . "<br />");		
+					$log->write( " fallimentoEYES riga: ".$row . "<br />");		
 				
 				
 				$query= sprintf("INSERT INTO kidneys(ng_kidneys, insertion_date_kidneys, renal_failure, nph, cystis, eco_blood_alterations) VALUES 
@@ -84,7 +85,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoKIDNEYS riga: ".$row . "<br />");	
+					$log->write( " fallimentoKIDNEYS riga: ".$row . "<br />");	
 				
 				
 				$query= sprintf("INSERT INTO liver(ng_liver, insertion_date_liver, eco_blood_alterations_liver, hf) VALUES 
@@ -94,7 +95,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoLIVER riga: ".$row . "<br />");	
+					$log->write( " fallimentoLIVER riga: ".$row . "<br />");	
 				
 				
 				$query= sprintf("INSERT INTO polydactyly (ng_polydactyly, insertion_date_polydactyly, postaxial, mesa_preaxial) VALUES 
@@ -104,7 +105,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoPOLYDACTYLY riga: ".$row . "<br />");	
+					$log->write( " fallimentoPOLYDACTYLY riga: ".$row . "<br />");	
 				
 				
 				$query= sprintf("INSERT INTO tongue(ng_tongue, insertion_date_tongue, cleft_lip_palat) VALUES
@@ -114,7 +115,7 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoTONGUE riga: ".$row . "<br />");				
+					$log->write( " fallimentoTONGUE riga: ".$row . "<br />");				
 				
 				
 				$query= sprintf("INSERT INTO mti(ng_mti, insertion_date_mti, em_cele, hydroceph, dw, cc_hypopl) VALUES 
@@ -124,14 +125,14 @@ $HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Note
 				if($dati)
 					$success++;
 				else 
-					$log->write( "fallimentoMTI riga: ".$row . "<br />");
+					$log->write( " fallimentoMTI riga: ".$row . "<br />");
 								
 			}
 			$mysqli->close();			
 		}
 		
 		else {
-			$log->write( "fallimento NG e' vuoto o non e' un numero riga: ".$row . "<br />");
+			$log->write( " fallimento NG e' vuoto o non e' un numero riga: ".$row . "<br />");
 		}
 
 		if($success == 8)

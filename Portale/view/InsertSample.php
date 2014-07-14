@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,15 +28,13 @@
 		<![endif]-->
 	</head>
 	<body id="body">
-		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 8.6cm; margin-top: 0cm" alt="immagine non visualizzata" width="130" height="150"/>
-
-		<h3>
-		<br>
-		Studio e analisi
-		<br>
-		della Sindrome di Joubert</h3>
-
-		<div class="panel panel-info"style="width:5cm;height:3cm;  margin-top:-2cm;  margin-left: 30cm">
+		<ul class="pager" style="float:top; float:left; margin-left: 1cm; margin-top: 1cm" onclick="location.href='TasksManagement.php'">
+			<li class="prev">
+				<a href="#"> &#8592 Cambia Attivit&agrave</a>
+			</li>
+		</ul>
+		
+		<div class="panel panel-info"style="float:right; float:top; margin-top:1cm; margin-right:1cm; width:5cm;height:3cm;">
 			<div class="panel-heading">
 				<h3 class="panel-title"></h3>
 			</div>
@@ -42,8 +44,10 @@
 				session_start();
 				if (isset($_SESSION["myusername"]))
 					print "Benvenuto <strong> " . $_SESSION["myusername"];
-				else
-					print "Sessione scaduta";
+				else {
+					echo "<meta http-equiv=refresh content='0; url=Unauthorized.php'>";
+					exit;
+				}
 				?>
 				</strong>
 				<br>
@@ -53,21 +57,28 @@
 				</button>
 			</div>
 		</div>
+		
+		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 6cm; margin-top: 1.5cm" alt="immagine non visualizzata" width="130" height="150"/>
 
-		<p id="chooseText" style="margin-left: 8cm; margin-top: 2cm">
-			<strong>Scegli la modalit&agrave di inserimento:</strong>
-		</p>
+		<h3 style="margin-top: 1.5cm">
+		<br>
+		Studio e analisi
+		<br>
+		della Sindrome di Joubert</h3>
+
+		<br>
+		<h2><p style="color: #228B22; margin-top:2cm; margin-bottom:1cm;" class="text-center">Scegli la modalit&agrave di inserimento</p></h2>
 
 		<p class="text-center">
 			<button type="button"  class="btn btn-success" onclick="location.href='InsertSingleSample.php'" value="go"
-			style="margin-top: 2cm; margin-left: -9.8cm" class="buttonStar">
+			style="margin-top: 2cm; margin-left: -8cm" class="buttonStar">
 				Inserisci singolo campione
 			</button>
 		</p>
 
 		<p class="text-center">
 			<button type="button"  class="btn btn-success" onclick="location.href='InsertSequencing.php'" value="go"
-			style="margin-top: -2cm; margin-left: 4.8cm" class="buttonStar">
+			style="margin-top: -2cm; margin-left: 7.5cm" class="buttonStar">
 				Inserisci un intero sequenziamento
 			</button>
 		</p>
@@ -86,10 +97,6 @@
 			</p></a>
 		</div>
 
-		<ul class="pager" style="margin-top: 1.2cm; margin-left: -30.5cm" onclick="location.href='TasksManagement.php'">
-			<li class="prev">
-				<a href="#"> &#8592 Cambia Attivit&agrave</a>
-			</li>
-		</ul>
+		
 	</body>
 </html>

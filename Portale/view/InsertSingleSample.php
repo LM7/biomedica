@@ -1,5 +1,6 @@
 <?php
 include '../persistence/LoadRecord.php';
+error_reporting(0); 
 ?>
 
 <!DOCTYPE html>
@@ -29,15 +30,14 @@ include '../persistence/LoadRecord.php';
 		<![endif]-->
 	</head>
 	<body id="body">
-		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 8.6cm; margin-top: 0cm" alt="immagine non visualizzata" width="130" height="150"/>
-
-		<h3>
-		<br>
-		Studio e analisi
-		<br>
-		della Sindrome di Joubert</h3>
-
-		<div class="panel panel-info"style="width:5cm;height:3cm;  margin-top:-2cm; margin-left:30cm">
+		
+		<ul class="pager" style="float:top; float:left; margin-left: 1cm; margin-top: 1cm" onclick="location.href='TasksManagement.php'">
+			<li class="prev">
+				<a href="#"> &#8592 Cambia Attivit&agrave</a>
+			</li>
+		</ul>
+		
+		<div class="panel panel-info"style="float:right; float:top; margin-top:1cm; margin-right:1cm; width:5cm;height:3cm;">
 			<div class="panel-heading">
 				<h3 class="panel-title"></h3>
 			</div>
@@ -47,8 +47,10 @@ include '../persistence/LoadRecord.php';
 				session_start();
 				if (isset($_SESSION["myusername"]))
 					print "Benvenuto <strong> " . $_SESSION["myusername"];
-				else
-					print "Sessione scaduta";
+				else {
+					echo "<meta http-equiv=refresh content='0; url=Unauthorized.php'>";
+					exit;
+				}
 				?>
 				</strong>
 				<br>
@@ -58,480 +60,481 @@ include '../persistence/LoadRecord.php';
 				</button>
 			</div>
 		</div>
-
-		<p id="chooseText" style="margin-left: 6cm; margin-top: 2cm">
-			<strong>Inserisci singolo campione:</strong>
-		</p>
-
-           <form name="form" method="post">
-			<div class="form-group"style="margin-left: 6cm">
-				<label for="inputEmail" class="col-lg-2 control-label">Codice Paziente</label>
-				<div class="col-lg-10">
-					<input type="text" class="form-control" id="inputCodicePaziente" placeholder="ex: 308" style="width: 7cm" name="inputCodicePaziente">
-				</div>
-			</div>
-
-			<div id="alertCampoVuoto" class='alert alert-danger'  role='alert' style='height:1.5cm; display:none; margin-top:1cm; margin-left:20cm; width:10cm'>
-				<strong>Attenzione!</strong>
-				il campo <strong>CodicePaziente</strong> &egrave vuoto!
-				<br>
-			</div>
-			
-			<div id="alertNonNumero" class='alert alert-danger'  role='alert' style='height:1.5cm; display:none; margin-top:1cm; margin-left:20cm; width:10cm'>
-				<strong>Attenzione!</strong>
-				il campo <strong>CodicePaziente</strong> non &egrave un numero!
-				<br>
-			</div>
-
-				<div class="form-group"style="margin-left: 6cm">
-					<label for="inputEmail" class="col-lg-2 control-label">Codice Famiglia</label>
-					<div class="col-lg-10">
-						<input type="text" class="form-control" id="inputCodiceFamiglia" placeholder="ex: COR000" style="width: 7cm" name="inputCodiceFamiglia">
-					</div>
-				</div>
-			
-			<div id="alertCampoVuoto2" class='alert alert-danger'  role='alert' style='height:1.5cm; display:none; margin-top:1cm; margin-left:20cm; width:10cm'>
-				<strong>Attenzione!</strong>
-				il campo <strong>CodiceFamiglia</strong> &egrave vuoto!
-				<br>
-			</div>
-			
-			<div id="alertTroppiCaratteri" class='alert alert-danger'  role='alert' style='height:1.5cm; display:none; margin-top:1cm; margin-left:20cm; width:10cm'>
-				<strong>Attenzione!</strong>
-				il campo <strong>CodiceFamiglia</strong> supera il limite di 10 caratteri!
-				<br>
-			</div>
-
-				<div class="form-group"style="margin-left: 6cm">
-					<label for="select" class="col-lg-2 control-label">Sesso</label>
-					<div class="col-lg-10">
-						<select class="form-control" id="inputSesso" style="width: 2cm" name="inputSesso">
-							<option value="m">m</option>
-							<option value="f">f</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group"style="margin-left: 6cm">
-					<label for="select" class="col-lg-2 control-label">Consanguinei</label>
-					<div class="col-lg-10">
-						<select class="form-control" id="inputConsanguinei" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-						<br>
-					</div>
-				</div>
-				
-			<table class="table table-striped table-hover " style="width: 30cm;margin-left: 4cm">
-			<thead>
-				<tbody>
-				<tr class="info">
-					<td>
-						<label for="select" class="control-label">CNS</label>
-						<br>
-						<select class="form-control" id="inputCns" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-					
-						<label for="select" class="control-label">OCCHI</label>
-						<br>
-						<select class="form-control" id="inputOcchi" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-					
-						<label for="select" class="control-label">RENI</label>
-						<br>
-						<select class="form-control" id="inputReni" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-					
-						<label for="select" class="control-label">FEGATO</label>
-						<br>
-						<select class="form-control" id="inputFegato" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-						<label for="select" class="control-label">POLIDATTILIA</label>
-						<br>
-						<select class="form-control" id="inputPolidattilia" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-						<label for="select" class="control-label">LINGUA</label>
-						<br>
-						<select class="form-control" id="inputLingua" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-						<label for="select" class="control-label">CUORE</label>
-						<br>
-						<select class="form-control" id="inputCuore" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-						<label for="select" class="control-label">DISMORFISMO</label>
-						<br>
-						<select class="form-control" id="inputDismorfismo" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-					<td>
-						<label for="select" class="control-label">MTI</label>
-						<br>
-						<select class="form-control" id="inputMti" style="width: 2cm">
-							<option>x</option>
-							<option>y</option>
-							<option>n</option>
-						</select>
-					</td>
-				</tr>
-			</thead>
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">Respiro</label>
-					<select class="form-control" id="inputRespiro"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-				</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Amaurosi</label>
-					<select class="form-control" id="inputAmaurosi"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-				</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Insufficienza Renale</label>
-					<select class="form-control" id="inputInsuffRenale"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Alterazione Eco/Blood</label>
-					<select class="form-control" id="inputAltEcoBlood"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Postassiale</label>
-					<select class="form-control" id="inputPostassiale"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Labio / Palatoschisi</label>
-					<select class="form-control" id="inputLabPal"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td> </td>
-				<td> </td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">E/M cele</label>
-					<select class="form-control" id="inputEMCele"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				</tr>
-				
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">ID</label>
-					<select class="form-control" id="inputID"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Retinopatia</label>
-					<select class="form-control" id="inputRetinopatia"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">NPH</label>
-					<select class="form-control" id="inputNPH"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">HF</label>
-					<select class="form-control" id="inputHF"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Mesa-Preassiale</label>
-					<select class="form-control" id="inputMesaPreassiale"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Idrocefalo</label>
-					<select class="form-control" id="inputIdrocefalo"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				</tr>
-				
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">Ipotonia</label>
-					<select class="form-control" id="inputIpotonia"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Coloboma</label>
-					<select class="form-control" id="inputColoboma"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Cisti</label>
-					<select class="form-control" id="inputCisti"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">DW</label>
-					<select class="form-control" id="inputDW"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				</tr>
-				
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">Atassia</label>
-					<select class="form-control" id="inputAtassia"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">Alterazione Eco/Blood</label>
-					<select class="form-control" id="inputAltEcoBlood"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><div class="form-group">
-					<label for="select" class="control-label">CC hypopl</label>
-					<select class="form-control" id="inputCChypopl"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				</tr>
-				
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">Aprassia</label>
-					<select class="form-control" id="inputAprassia"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				</tr>
-				
-				<tr class="active">
-				<td><div class="form-group">
-					<label for="select" class="control-label">Nistagmo</label>
-					<select class="form-control" id="inputNistagmo"style="width: 2cm">
-						<option>x</option>
-						<option>y</option>
-						<option>n</option>
-					</select>
-					</div></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				</tr>
-			</tbody>
-		</table>	
 		
-		<div class="form-group">
+		
+		
+		
+		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 6cm; margin-top: 1.5cm" alt="immagine non visualizzata" width="130" height="150"/>
+
+		<h3 style="margin-top: 1.5cm">
+		<br>
+		Studio e analisi
+		<br>
+		della Sindrome di Joubert</h3>
+		
+		<br>
+		<h2><p style="color: #228B22; margin-left:-1cm; margin-top:2cm; margin-bottom:1cm;" class="text-center">Inserisci singolo campione</p></h2>
+		<br>
+
+		<form name="form" method="post">
+			<div class="row">
+				<div class="form-group"style="margin-left: 6cm">
+					<label for="inputEmail" class="col-lg-2 control-label">Patient Code:</label>
+					<div class="col-lg-10">
+						<input type="number" class="form-control" id="inputCodicePaziente" placeholder="ex: 308" style="width: 7cm" name="inputCodicePaziente" required>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="form-group"style="margin-left: 6cm">
+					<label for="inputEmail" class="col-lg-2 control-label">Family Code:</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="inputCodiceFamiglia" placeholder="ex: COR000" style="width: 7cm" name="inputCodiceFamiglia" required maxlength="10">
+					</div>
+				</div>
+			</div>
+
+			<br>
+			
+			<div class="form-group"style="margin-left: 6cm">
+				<label for="select" class="col-lg-2 control-label">Sex:</label>
+				<div class="col-lg-10">
+					<select class="form-control" id="inputSesso" style="width: 2cm" name="inputSesso">
+						<option value="m">m</option>
+						<option value="f">f</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group"style="margin-left: 6cm">
+				<label for="select" class="col-lg-2 control-label">Consanguineous:</label>
+				<div class="col-lg-10">
+					<select class="form-control" id="inputConsanguinei" style="width: 2cm" name="inputConsanguinei">
+						<option value="x">x</option>
+						<option value="y">y</option>
+						<option value="n">n</option>
+					</select>
+					<br>
+				</div>
+			</div>
+
+			<table class="table table-striped table-hover " style="width: 30cm;margin-left: 4cm">
+				<thead>
+					<tbody>
+						<tr class="info">
+							<td><label for="select" class="control-label">CNS</label>
+							<br>
+							<select class="form-control" id="inputCns" style="width: 2cm" name="inputCns">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">EYES</label>
+							<br>
+							<select class="form-control" id="inputOcchi" style="width: 2cm" name="inputOcchi">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">KIDNEYS</label>
+							<br>
+							<select class="form-control" id="inputReni" style="width: 2cm" name="inputReni">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">LIVER</label>
+							<br>
+							<select class="form-control" id="inputFegato" style="width: 2cm" name="inputFegato">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">POLYDACTYLY</label>
+							<br>
+							<select class="form-control" id="inputPolidattilia" style="width: 2cm" name="inputPolidattilia">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">TONGUE</label>
+							<br>
+							<select class="form-control" id="inputLingua" style="width: 2cm" name="inputLingua">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">HEART</label>
+							<br>
+							<select class="form-control" id="inputCuore" style="width: 2cm" name="inputCuore">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">DYSMORPHIC</label>
+							<br>
+							<select class="form-control" id="inputDismorfismo" style="width: 2cm" name="inputDismorfismo">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+							<td><label for="select" class="control-label">MTI</label>
+							<br>
+							<select class="form-control" id="inputMti" style="width: 2cm" name="inputMti">
+								<option value="x">x</option>
+								<option value="y">y</option>
+								<option value="n">n</option>
+							</select></td>
+						</tr>
+				</thead>
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Breath</label>
+						<select class="form-control" id="inputRespiro"style="width: 2cm" name="inputRespiro">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Leber amaurosis</label>
+						<select class="form-control" id="inputAmaurosi"style="width: 2cm" name="inputAmaurosi">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Renal failure</label>
+						<select class="form-control" id="inputInsuffRenale"style="width: 2cm" name="inputInsuffRenale">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Eco/blood alterations </label>
+						<select class="form-control" id="inputAltEcoBlood"style="width: 2cm" name="inputAltEcoBlood">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Postaxial</label>
+						<select class="form-control" id="inputPostassiale"style="width: 2cm" name="inputPostassiale">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Cleft lip/palate</label>
+						<select class="form-control" id="inputLabPal"style="width: 2cm" name="inputLabPal">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">E/M cele</label>
+						<select class="form-control" id="inputEMCele"style="width: 2cm" name="inputEMCele">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+				</tr>
+
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">ID</label>
+						<select class="form-control" id="inputID"style="width: 2cm" name="inputID">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Retinopathy</label>
+						<select class="form-control" id="inputRetinopatia"style="width: 2cm" name="inputRetinopatia">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">NPH</label>
+						<select class="form-control" id="inputNPH"style="width: 2cm" name="inputNPH">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">HF</label>
+						<select class="form-control" id="inputHF"style="width: 2cm" name="inputHF">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Mesa-preaxial</label>
+						<select class="form-control" id="inputMesaPreassiale"style="width: 2cm" name="inputMesaPreassiale">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Hydroceph</label>
+						<select class="form-control" id="inputIdrocefalo"style="width: 2cm" name="inputIdrocefalo">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+				</tr>
+
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Hypotonia</label>
+						<select class="form-control" id="inputIpotonia"style="width: 2cm" name="inputIpotonia">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Coloboma</label>
+						<select class="form-control" id="inputColoboma"style="width: 2cm" name="inputColoboma">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Cystis</label>
+						<select class="form-control" id="inputCisti"style="width: 2cm" name="inputCisti">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">DW</label>
+						<select class="form-control" id="inputDW"style="width: 2cm" name="inputDW">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+				</tr>
+
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Ataxia</label>
+						<select class="form-control" id="inputAtassia"style="width: 2cm"name="inputAtassia">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Eco/blood alterations</label>
+						<select class="form-control" id="inputAltEcoBlood"style="width: 2cm"name="inputAltEcoBlood2">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">CC hypopl</label>
+						<select class="form-control" id="inputCChypopl"style="width: 2cm"name="inputCChypopl">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+				</tr>
+
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Apraxia</label>
+						<select class="form-control" id="inputAprassia"style="width: 2cm"name="inputAprassia">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+
+				<tr class="active">
+					<td>
+					<div class="form-group">
+						<label for="select" class="control-label">Nystagmus</label>
+						<select class="form-control" id="inputNistagmo"style="width: 2cm"name="inputNistagmo">
+							<option value="x">x</option>
+							<option value="y">y</option>
+							<option value="n">n</option>
+						</select>
+					</div></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				</tbody>
+			</table>
+  
+			<div class="form-group">
 				<label for="textArea" class="col-lg-2 control-label" style="margin-left: 6cm; margin-top: 1cm">Note</label>
 				<div class="col-lg-10">
-					<textarea class="form-control" rows="3" id="textArea" style="width: 14cm;margin-left: 10cm; margin-top: -1cm"></textarea>
+					<textarea class="form-control" rows="3" id="textArea" style="width: 14cm;margin-left: 10cm; margin-top: -1cm" name="textArea"></textarea>
 				</div>
-		</div>
-		
-				<div class="form-group">
-					<br>
-					<label for="inputEmail" class="col-lg-2 control-label"style="margin-left: 6cm; margin-top: 1cm">Diagnosi</label>
-					<div class="col-lg-10">
-					<input type="text" class="form-control" id="inputDiagnosi"style="width: 7cm; margin-left: 10cm; margin-top: -1cm">
-					</div>
+			</div>
+
+			<div class="form-group">
+				<br>
+				<label for="inputEmail" class="col-lg-2 control-label"style="margin-left: 6cm; margin-top: 1cm">Diagnosi</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputDiagnosi"style="width: 7cm; margin-left: 10cm; margin-top: -1cm" name="inputDiagnosi">
 				</div>
-		<button id="bottone" style="margin-left: 27cm; margin-top: 2cm" name="okPatient" class="btn btn-success">Modifica</button>
-		</form>		
-		
-			
-		<ul class="pager" style="margin-top: 2cm; margin-left: -30.5cm" onclick="location.href='TasksManagement.php'">
-			<li class="prev">
-				<a href="#"> &#8592 Cambia Attivit&agrave</a>
-			</li>
-		</ul>
-		
-		
+			</div>
+			<button id="bottone" style="margin-left: 27cm; margin-top: 2cm" name="okPatient" class="btn btn-success">
+				Inserisci
+			</button>
+		</form>
+
+
 		<script>
 					$("#bottone").click(function(event) {
-						var myInputCodicePaziente = document.getElementById('inputCodicePaziente');
-						var myInputCodiceFamiglia = document.getElementById('inputCodiceFamiglia');
-						var elemCampoVuoto = document.getElementById('alertCampoVuoto');
-						var elemNonNumero = document.getElementById('alertNonNumero');
-						var elemCampoVuoto2 = document.getElementById('alertCampoVuoto2');
-						var elemTroppiCaratteri = document.getElementById('alertTroppiCaratteri');
+						var elemInserimentoCorretto = document.getElementById('correctInsertion');
 						var controllo = true;
 						<?php
 							$_SESSION["control"]=false;
 							?>
-						
-						
-						if(myInputCodicePaziente.value == "") {
-							event.preventDefault();
-							$(elemCampoVuoto).show();
-							$(elemNonNumero).hide();
-							controllo=false;
-						}
-						else if(isNaN(myInputCodicePaziente.value)) {
-							event.preventDefault();
-							$(elemCampoVuoto).hide();
-							$(elemNonNumero).show();
-							controllo=false;
-						}
-						else {
-							$(elemNonNumero).hide();
-							$(elemCampoVuoto).hide();
-						}
-						if(myInputCodiceFamiglia.value=="") {
-							event.preventDefault();
-							$(elemCampoVuoto2).show();
-							$(elemTroppiCaratteri).hide();
-							controllo=false;
-						}
-						else if(myInputCodiceFamiglia.value.length>10) {
-							event.preventDefault();
-							$(elemCampoVuoto2).hide();
-							$(elemTroppiCaratteri).show();
-							controllo=false;
-						}
-						else {
-							$(elemTroppiCaratteri).hide();
-							$(elemCampoVuoto2).hide();
+						if(elemInserimentoCorretto) {
+							$(elemInserimentoCorretto).hide();
 						}
 						if(controllo) {
 							<?php
 							$_SESSION["control"]=true;
 							?>
-							//$insert= new LoadRecord();
-							//$tupla=array();
-							//$check=$insert->Load($tupla);
-							//if($check)
-							//echo "win!";
-							
 						}					
 					});
-				</script>	
+				</script>
+					
 				<?php
-					if($_SESSION['control']) {
-							
-						echo ($_POST['inputCodicePaziente']);					
+				if (isset($_POST['inputCodiceFamiglia'])) {
+					if ($_SESSION['control']) {
+						$FAMILY = $_POST['inputCodiceFamiglia'];
+						$NG = $_POST['inputCodicePaziente'];
+
+						$sex = $_POST['inputSesso'];
+						$consang = $_POST['inputConsanguinei'];
+						$CNS = $_POST['inputCns'];
+						$breath = $_POST['inputRespiro'];
+						$id = $_POST['inputID'];
+						$hypotonia = $_POST['inputIpotonia'];
+						$ataxia = $_POST['inputAtassia'];
+						$apraxia = $_POST['inputAprassia'];
+						$nystagmus = $_POST['inputNistagmo'];
+						$EYES = $_POST['inputOcchi'];
+						$leber_amaurosis = $_POST['inputAmaurosi'];
+						$retinopathy = $_POST['inputRetinopatia'];
+						$coloboma = $_POST['inputColoboma'];
+						$KIDNEYS = $_POST['inputReni'];
+						$renal_failure = $_POST['inputInsuffRenale'];
+						$nph = $_POST['inputNPH'];
+						$Cystis = $_POST['inputCisti'];
+						$eco_blood_alterations = $_POST['inputAltEcoBlood2'];
+						$LIVER = $_POST['inputFegato'];
+						$eco_blood_alterations_liver = $_POST['inputAltEcoBlood'];
+						$hf = $_POST['inputHF'];
+						$POLYDACTYLY = $_POST['inputPolidattilia'];
+						$postaxial = $_POST['inputPostassiale'];
+						$mesa_preaxial = $_POST['inputMesaPreassiale'];
+						$TONGUE = $_POST['inputLingua'];
+						$cleft_lip_palate = $_POST['inputLabPal'];
+						$HEART = $_POST['inputCuore'];
+						$DYSMORPHIC_FEATURES = $_POST['inputDismorfismo'];
+						$MTI = $_POST['inputMti'];
+						$em_cele = $_POST['inputEMCele'];
+						$hydroceph = $_POST['inputIdrocefalo'];
+						$dw = $_POST['inputDW'];
+						$cc_hypopl = $_POST['inputCChypopl'];
+						$Notes = $_POST['textArea'];
+						$Diagnosis = $_POST['inputDiagnosi'];
+				
+						$insert = new LoadRecord();
+						$tupla = array($FAMILY, $NG, 0, 0, $sex, $consang, $CNS, $breath, $id, $hypotonia, $ataxia, $apraxia, $nystagmus, 
+										$EYES, $leber_amaurosis, $retinopathy, $coloboma, $KIDNEYS, $renal_failure, $nph, $Cystis, $eco_blood_alterations, 
+										$LIVER, $eco_blood_alterations_liver, $hf, $POLYDACTYLY, $postaxial, $mesa_preaxial, $TONGUE, $cleft_lip_palate, 
+										$HEART, $DYSMORPHIC_FEATURES, $MTI, $em_cele, $hydroceph, $dw, $cc_hypopl, $Notes, $Diagnosis);
+						$check = $insert -> Load($tupla);
+						if ($check)
+							echo print "<div class='alert alert-dismissable alert-success fade in' role='alert' id='correctInsertion' style='width:8cm;margin-left: 22cm; margin-top:-32.5cm'>
+													<span class='glyphicon glyphicon-ok'></span>
+													<button type='button' id='close' class='close' data-dismiss='alert'' aria-hidden='true'>
+													&times;
+													</button>
+													<strong>Inserimento Corretto!</strong><br>
+													Il campione &egrave stato aggiunto nell'archivio
+													</div>";			
 					}
-				?>		
-		
+				}
+				?>
 	</body>
 </html>

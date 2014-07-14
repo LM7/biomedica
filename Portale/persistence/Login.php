@@ -29,21 +29,12 @@
    $count=mysql_num_rows($result);
    
    if($count==1) {
-   		//session_start();
-   		//$_SESSION["myusername"]=$myusername;
-	    //$_SESSION["mypassword"]=$mypassword; //perchè?
+   		session_start();
+   		$_SESSION["myusername"]=$myusername;
+	    $_SESSION["mypassword"]=$mypassword; //perch��?
 
-		//header("location:LoginSuccess.php");
-   		if ($rememberme == "yes") {
-   			setcookie("myusername", $myusername, time()+7600);
-			header("location:LoginSuccess.php");
-   		}
-		else if($rememberme == "") {
-			session_start();
-			$_SESSION["myusername"]=$myusername;
-			$_SESSION["mypassword"]=$mypassword;//perchè?
-			header("location:LoginSuccess.php");
-		}
+		header("location:LoginSuccess.php");
+   		
    }
    else {
    		session_start();

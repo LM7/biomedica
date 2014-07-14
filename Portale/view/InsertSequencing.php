@@ -1,5 +1,6 @@
 <?php
 include '../persistence/FromExcelToDB.php';
+error_reporting(0);  
 ?>
 
 <!DOCTYPE html>
@@ -31,15 +32,14 @@ include '../persistence/FromExcelToDB.php';
 	</head>
 
 	<body id="body">
-		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 8.6cm; margin-top: 0cm" alt="immagine non visualizzata" width="130" height="150"/>
-
-		<h3>
-		<br>
-		Studio e analisi
-		<br>
-		della Sindrome di Joubert</h3>
-
-		<div class="panel panel-info"style="width:5cm;height:3cm;  margin-top:-2cm;  margin-left: 30cm">
+		
+		<ul class="pager" style="float:top; float:left; margin-left: 1cm; margin-top: 1cm" onclick="location.href='TasksManagement.php'">
+			<li class="prev">
+				<a href="#"> &#8592 Cambia Attivit&agrave</a>
+			</li>
+		</ul>
+		
+		<div class="panel panel-info"style="float:right; float:top; margin-top:1cm; margin-right:1cm; width:5cm;height:3cm;">
 			<div class="panel-heading">
 				<h3 class="panel-title"></h3>
 			</div>
@@ -49,8 +49,10 @@ include '../persistence/FromExcelToDB.php';
 				session_start();
 				if (isset($_SESSION["myusername"]))
 					print "Benvenuto <strong> " . $_SESSION["myusername"];
-				else
-					print "Sessione scaduta";
+				else {
+					echo "<meta http-equiv=refresh content='0; url=Unauthorized.php'>";
+					exit;
+				}
 				?>
 				</strong>
 				<br>
@@ -60,11 +62,27 @@ include '../persistence/FromExcelToDB.php';
 				</button>
 			</div>
 		</div>
+		
+		<img src="logoMendelSS.jpg" id="imglogo" style="margin-left: 6cm; margin-top: 1.5cm" alt="immagine non visualizzata" width="130" height="150"/>
 
-		<p id="chooseText" style="margin-left: 8cm; margin-top: 2cm">
-			<strong>Inserisci sequenziamento:</strong>
-		</p>
+		<h3 style="margin-top: 1.5cm">
+		<br>
+		Studio e analisi
+		<br>
+		della Sindrome di Joubert</h3>
 
+		
+		
+		<br><br><br><br>
+		<h2><p style="color: #228B22" class="text-center">Inserisci sequenziamento</p></h2>
+		
+		<form action="" method="POST" enctype="multipart/form-data"style="width:15cm; margin-left:10cm; margin-right: 60cm; margin-top: 1.5cm">
+			<input type="file" class="filestyle" data-buttonName="btn-primary"id="fileUpload"name="file">
+			<br>
+			<br>
+			<input type="submit" class="btn btn-success" name="submit" value="Inserisci" style="margin-top: 0cm; margin-left: 13cm">
+		</form>
+		
 		<?php
 	
 		if (isset($_FILES["file"]["name"])) {
@@ -73,26 +91,29 @@ include '../persistence/FromExcelToDB.php';
 			//$type = $_FILES['file']['type']
 	
 			$tmp_name = $_FILES['file']['tmp_name'];
-			$error = $_FILES['file']['error' ];
+			//echo print $tmp_name;
+			$error = $_FILES['file']['error'];
 			
 			if (isset($name)) {
 				if (!empty($name)) {
-					$location ='../persistence/';
-					if (move_uploaded_file($tmp_name, $location . $name)) {
+					//$location ='../persistence/';
+					//if(move_uploaded_file($tmp_name,$location.$name)) {
 						if(strstr($name,".xls") || strstr($name, ".xlsx")) {
 							$exception = false;						
 							$loading = new FromExcelToDB();
 							try {
-								$string = $loading -> load('../persistence/'.$name);
+								$string = $loading -> load($tmp_name);
+								unlink($tmp_name);
 							}catch(Exception $e) {
 								$string = "";
 								$exception = true;	
 							}
-							echo '<p id="chooseText" style="margin-left: 4cm; margin-top: 3cm">
+							echo '<p id="chooseText" style="margin-left: 10cm; margin-top: 1cm">
+							<span class="glyphicon glyphicon-ok"></span>
 							<strong>'.$string.'</strong>
 							</p>';
 							if($exception)
-							echo '<div class="alert alert-dismissable alert-danger fade in" style="width:10cm;margin-left: 4cm">
+							echo '<div class="alert alert-dismissable alert-danger fade in" style="width:10cm;margin-left: 10cm;margin-top:-2cm">
 								<button type="button" id="close" class="close" data-dismiss="alert" aria-hidden="true">&times;
 								</button>
 	  							<strong>Attenzione!</strong> Errore nello standard <br />
@@ -103,17 +124,17 @@ include '../persistence/FromExcelToDB.php';
 							else {
 								$log = new Log();
 								$log->emptyAll();
-								$log->write("Il formato del file deve essere .xls oppure .xlsx". "<br /> <br />");
-								echo '<div class="alert alert-dismissable alert-danger fade in" style="width:10cm;margin-left: 4cm;margin-top: 3cm">
+								//$log->write("Il formato del file deve essere .xls oppure .xlsx". "<br /> <br />");
+								echo '<div class="alert alert-dismissable alert-danger fade in" style="width:10cm;margin-left:10cm;margin-top:1cm">
 								<button type="button" id="close" class="close" data-dismiss="alert" aria-hidden="true">&times;
 								</button>
 	  							<strong>Attenzione!</strong> il formato del file deve essere excel 
 	  							</div>';
 							}
-						} 
-						else {
-							echo 'please choose a file';
-						}
+						//} 
+						//else {
+						//	echo 'please choose a file';
+						//}
 					}
 				}
 			}
@@ -123,7 +144,7 @@ include '../persistence/FromExcelToDB.php';
 		if (isset($_FILES["file"]["name"]) && filesize("../persistence/log.txt") > 0) {
 			$log = new Log();
 			echo '
-				<button class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg" style="margin-left: 4cm; margin-top: 0cm">More info</button>
+				<button class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg" style="margin-left:10cm; margin-top: 0cm">More info</button>
 				<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	  				<div class="modal-dialog modal-lg">
 	    				<div class="modal-content">'.
@@ -132,40 +153,7 @@ include '../persistence/FromExcelToDB.php';
 	  				</div>
 				</div>';
 		}
-		if (isset($_FILES["file"]["name"]) && filesize("../persistence/log.txt") > 0) {
-			echo '
-				<div class="panel-group" id="accordion" style="width:15cm; margin-left: 4cm; margin-top: 0cm">
-		  			<div class="panel panel-danger">
-		    			<div class="panel-heading">
-		      				<h4 class="panel-title">
-		        				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-		          				More info
-		        				</a>
-		      				</h4>
-		    			</div>
-		    			<div id="collapseOne" class="panel-collapse collapse">
-		      				<div class="panel-body">'.
-		      				$log->read().	        
-		      				'</div>
-		    			</div>
-		  			</div>
-		  		</div>';
-		}
 		?>
-		
-		<form action="" method="POST" enctype="multipart/form-data"style="width:15cm; margin-left:10cm; margin-right: 60cm; margin-top: 1.5cm">
-			<input type="file" class="filestyle" data-buttonName="btn-primary"id="fileUpload"name="file">
-			<br>
-			<br>
-			<input type="submit" class="btn btn-success" name="submit" value="Submit"style="margin-top: 0cm; margin-left: 13cm">
-		</form>
-		
-		
-		<ul class="pager" style="margin-top: 7cm; margin-left: -30.5cm" onclick="location.href='TasksManagement.php'">
-			<li class="prev">
-				<a href="#"> &#8592 Cambia Attivit&agrave</a>
-			</li>
-		</ul>
 
 	</body>
 </html>
