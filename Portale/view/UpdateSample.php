@@ -162,6 +162,7 @@ error_reporting(0);
 								$arrPin[] = $arr[$i][$j];
 							}
 							else if($j==1) {
+							    $arrPin[] = $arr[$i][$j];
 						        $d = new DateTime($arr[$i][$j]);
 						        $data = $d->format('Y-m-d');
 						        $print .= "<td class='active'>".$data. "</td>";
@@ -221,6 +222,7 @@ error_reporting(0);
 								$arrPin[] = $arr[$i][$j];
 							}
 							else if($j==1) {
+							    $arrPin[] = $arr[$i][$j];
                                 $d = new DateTime($arr[$i][$j]);
                                 $data = $d->format('Y-m-d');
                                 $print .= "<td class='active'>".$data. "</td>";
