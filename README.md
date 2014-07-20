@@ -21,14 +21,12 @@ Il portale può essere utilizzato sia da utenti generici, che vogliono intrapren
 
 Gli utenti amministratori dovranno essere registrati preventivamente all’interno del database per permettere il loro riconoscimento durante la fase di autenticazione. Per fare questo è possibile sia caricare i dati dell’amministratore (nome e password) attraverso lo script clinical_data.sql, modificando opportunamente la seguente istruzione:
 
-es.
-
 	INSERT INTO `administrators` (`name`, `password`) VALUES
 	('claudia', 'claudia'),
 	('lorenzo', 'lorenzo'),
 	('luca', 'luca'),
 	('tommaso', 'tommaso');
 
-oppure aggiungere l’amministratore e le relative credenziali direttamente attraverso il database, accessibile da: http://localhost/phpmyadmin. In questo caso sarà necessario aggiungere i dati dell’utente amministratore, all’interno della tabella administrators, attraverso il comando Inserisci.
+Oppure aggiungere l’amministratore e le relative credenziali direttamente attraverso il database, accessibile da: [http://localhost/phpmyadmin](http://localhost/phpmyadmin). In questo caso sarà necessario aggiungere i dati dell’utente amministratore, all’interno della tabella administrators, attraverso il comando Inserisci.
 
 
