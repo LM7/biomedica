@@ -14,14 +14,10 @@ error_reporting(0);
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link href="TemplateAdmin.css" rel="stylesheet" type="text/css">
 		<!-- javascript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		
 		
 
@@ -65,36 +61,48 @@ error_reporting(0);
 		
 		
 		
-		<p id="chooseText" style="margin-left: 8cm; margin-top:3cm"><strong>Scegli una tra le seguenti l'attivit&agrave:</strong></p>
+		<p id="chooseText" style="margin-left: 10cm; margin-top:3cm"><strong>Scegli una tra le seguenti l'attivit&agrave:</strong></p>
 		
 		<p class="text-center">
 		<button type="button"  class="btn btn-success" onclick="location.href='InsertSample.php'" value="go" 
-		style="margin-top: 2cm; margin-left: -9.8cm" class="buttonStar">
+		style="margin-top: 2cm; margin-left: -16cm" class="buttonStar">
 			Inserisci campioni
 		</button>
-		<div class="well" style="width: 6cm; margin-left: 10cm; margin-top: 0.5cm">
+		<div class="well" style="width: 6cm; margin-left: 7cm; margin-top: 0.5cm">
   		<p align="center">Permette di aggiungere all'archivio nuovi campioni, sia singoli che multipli purch&egrave; raccolti in un file Excel in base allo standard.</p> 
 		</div>
 		</p>
 
 		<p class="text-center">
 		<button type="button"  class="btn btn-success" onclick="location.href='UpdateSample.php'" value="go" 
-		style="margin-top: -11.5cm; margin-left: 6.2cm" class="buttonStar">
+		style="margin-top: -11.5cm; margin-left: -2cm" class="buttonStar">
 			Modifica campioni
 		</button>
-		<div class="well" style="width: 6cm; margin-left: 18cm; margin-top: -5.3cm">
+		<div class="well" style="width: 6cm; margin-left: 14cm; margin-top: -5.3cm">
   		<p align="center">Permette di correggere campioni gi&aacute presenti nell'archivio, intervenendo sulle singole specifiche relative al paziente.</p> 
 		</div>
 		</p>
 		
 		<p class="text-center">
+		<button type="button"  class="btn btn-success" onclick="location.href='DeleteSample.php'" value="go" 
+		style="margin-top: -11.5cm; margin-left: 12cm" class="buttonStart">
+			Elimina campione
+		</button>
+		<div class="well" style="width: 6cm; margin-left: 21cm; margin-top: -5.3cm">
+  		<p align="center">Permette di eliminare un campione presente all'interno dell'archivio, dopo averlo cercato sulla base del proprio codice.</p> 
+		</div>
+		
+		<p class="text-center">
 		<button type="button"  class="btn btn-success" onclick="location.href='QueryAdmin.php'" value="go" 
-		style="margin-top: -11.5cm; margin-left: 22cm" class="buttonStart">
+		style="margin-top: -11.5cm; margin-left: 26cm" class="buttonStart">
 			Effettua una ricerca
 		</button>
-		<div class="well" style="width: 6cm; margin-left: 26cm; margin-top: -5.3cm">
+		<div class="well" style="width: 6cm; margin-left: 28cm; margin-top: -5.3cm">
   		<p align="center">Permette di interrogare l'archivio per effettuare ricerche incrociate sui pazienti affetti dalla sindrome.</p> 
 		</div>
+		</p>
+		
+		
 		</p>
 		
 </body>

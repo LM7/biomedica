@@ -17,9 +17,9 @@ error_reporting(0);
 		<link href="TemplateAdmin.css" rel="stylesheet" type="text/css">
 		<!-- javascript -->
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 		<script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
