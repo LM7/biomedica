@@ -23,7 +23,7 @@ Gli utenti amministratori dovranno essere registrati preventivamente all’inter
 
 es. 
 	INSERT INTO `administrators` (`name`, `password`) VALUES
-('claudia', 'claudia'),
+\vspace{1cm} ('claudia', 'claudia'),
 ('lorenzo', 'lorenzo'),
 ('luca', 'luca'),
 ('tommaso', 'tommaso');
