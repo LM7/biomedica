@@ -23,10 +23,10 @@ Gli utenti amministratori dovranno essere registrati preventivamente all’inter
 
 es. 
 	INSERT INTO `administrators` (`name`, `password`) VALUES
-\vspace{1cm} ('claudia', 'claudia'),
-('lorenzo', 'lorenzo'),
-('luca', 'luca'),
-('tommaso', 'tommaso');
+        \vspace{1cm} ('claudia', 'claudia'),
+        ('lorenzo', 'lorenzo'),
+        ('luca', 'luca'),
+        ('tommaso', 'tommaso');
 
 oppure aggiungere l’amministratore e le relative credenziali direttamente attraverso il database, accessibile da: http://localhost/phpmyadmin. In questo caso sarà necessario aggiungere i dati dell’utente amministratore, all’interno della tabella administrators, attraverso il comando Inserisci.
 
