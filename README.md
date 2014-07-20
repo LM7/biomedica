@@ -1,8 +1,5 @@
 Informatica Biomedica
 =====================
-
-Progetto di informatica biomedica:
-
 Click [here](http://localhost/informatica_biomedica/Portale/view/HomePage.php) to see the project.
 
 
