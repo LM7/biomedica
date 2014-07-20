@@ -21,7 +21,8 @@ Il portale può essere utilizzato sia da utenti generici, che vogliono intrapren
 
 Gli utenti amministratori dovranno essere registrati preventivamente all’interno del database per permettere il loro riconoscimento durante la fase di autenticazione. Per fare questo è possibile sia caricare i dati dell’amministratore (nome e password) attraverso lo script clinical_data.sql, modificando opportunamente la seguente istruzione:
 
-es. 
+es.
+
 	INSERT INTO `administrators` (`name`, `password`) VALUES
 	\vspace{1cm} ('claudia', 'claudia'),
 	('lorenzo', 'lorenzo'),
